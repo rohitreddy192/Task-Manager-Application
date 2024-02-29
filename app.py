@@ -364,7 +364,7 @@ def send_overdue_emails():
         overdue_events_by_user_id = (
             db.session.query(
                 Event.user_id,
-                func.group_concat(Event.id).label('event_ids')
+                func.string_agg(Event.id.cast(db.String), ', ').label('event_ids')
             )
             .filter(Event.date <= current_date, Event.time <= current_time, Event.completed == 0)
             .group_by(Event.user_id)
