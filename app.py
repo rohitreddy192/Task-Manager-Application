@@ -8,8 +8,6 @@ from flask_login import LoginManager, login_user, logout_user, current_user, Use
 from flask_mail import Mail, Message
 import secrets
 from datetime import datetime
-from apscheduler.schedulers.background import BackgroundScheduler
-import atexit
 import json
 import logging
 import os
@@ -18,15 +16,6 @@ import tempfile
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = secrets.token_hex(24)  
-
-"""
-    # Database Creds
-    USERNAME = os.environ.get('POSTGRES_USER')
-    PASSWORD = os.environ.get('POSTGRES_PASSWORD')
-    HOST = os.environ.get('POSTGRES_HOST')
-    DATABASE = os.environ.get('POSTGRES_DATABASE')
-"""
-
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["VERCEL_POSTGRES_URL"]
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -40,9 +29,7 @@ app.config['MAIL_DEFAULT_SENDER'] = os.environ["MAIL_ID"]  # Replace with your e
 logging.basicConfig(level=logging.DEBUG)
 
 mail = Mail(app)
-#engine = create_engine(os.environ.get('POSTGRES_URL'))
-db = SQLAlchemy(app)#, engine = engine)
-scheduler = BackgroundScheduler()
+db = SQLAlchemy(app)
 
 class User(db.Model, UserMixin):
     __tablename__ = 'User'
@@ -369,7 +356,7 @@ def send_email(user_email, event):
 
     mail.send(msg)
 
-@scheduler.scheduled_job('interval', minutes = 60)
+@app.route('/scheduled-task')
 def send_overdue_emails():
     with app.app_context():
         current_time = datetime.now().time()
@@ -393,16 +380,12 @@ def send_overdue_emails():
                 for event in events:
                     send_email(user.email, event)
                     print(f'Email Sent for User: {user.name}')
-
-
-# Make sure to shut down the scheduler when the app exits
-atexit.register(lambda: scheduler.shutdown())
+    return 'Emails Sent Successfully!!!', 200
 
 
 if __name__ == '__main__':
     logging.info("Script started.")
     try:
-        scheduler.start()
         app.run(debug=True)
     except Exception as e:
         logging.error(f"An error occurred: {e}")
