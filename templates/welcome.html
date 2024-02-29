@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="flash-message">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+    <script>
+      // Automatically close the flash message after 5 seconds
+      setTimeout(function() {
+        document.getElementById('flash-message').style.display = 'none';
+      }, 5000);
+    </script>
+  {% endif %}
+{% endwith %}
+
+{% endblock %}

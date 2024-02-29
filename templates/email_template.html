@@ -1,0 +1,28 @@
+<!-- email_template.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Reminder</title>
+</head>
+<body>
+    <h2>Task Reminder</h2>
+    <p>Here is a reminder for your task:</p>
+
+    <!-- Display event details here -->
+    <p>Task Name: {{ event.task_name }}</p>
+    <p>Date: {{ event.date }}</p>
+    <p>Time: {{ event.time }}</p>
+    <p>Duration: {{ event.duration }} minutes</p>
+    <p>Notes:</p>
+    {%for single_event in event.notes.split("\r") %}
+        <p>{{single_event}}</p>
+    {% endfor %}
+
+    <!-- Add more details as needed -->
+
+    <p>Thank you!</p>
+</body>
+</html>

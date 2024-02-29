@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}
+Completed Tasks
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    {% if tasks %}
+  <div class="row">
+      <div class="col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+                {% for task in tasks %}
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ task.task_name }}</h5>
+                        <p class="card-text">Date: {{ task.date }} | Time: {{ task.time }} | Duration: {{ task.duration }} minutes</p>
+                        <p class="card-text">Notes: </p>
+                        {% for note in task.notes.split("\r") %}
+                            <p>{{ note }}</p>
+                        {% endfor %}
+                        
+                        <span class="badge badge-success">Completed</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<p>No Completed Tasks!!!</p>
+
+{% endif %}
+</div>
+{% endblock %}

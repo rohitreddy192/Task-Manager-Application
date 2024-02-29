@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="flash-message">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+    <script>
+      // Automatically close the flash message after 5 seconds
+      setTimeout(function() {
+        document.getElementById('flash-message').style.display = 'none';
+      }, 5000);
+    </script>
+  {% endif %}
+{% endwith %}
+
+<div class="container mt-5">
+  <div class="row">
+    {% for task in tasks %}
+      <div class="col-lg-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+                    <h5 class="card-title">{{ task.task_name }}</h5>
+                    <p class="card-text">Date: {{ task.date }} | Time: {{ task.time }} | Duration: {{ task.duration }} minutes</p>
+                    <p class="card-text">Notes: </p>
+                      {% for note in task.notes.split("\r") %}
+                        <p>{{ note }}</p>
+                      {% endfor %}
+                    
+                    {% if task.completed == 0 %}
+                        <form method="POST" action="{{ url_for('mark_completed', task_id=task.id) }}" class="d-inline">
+                            <button type="submit" class="btn btn-success btn-sm mr-2">Mark Completed</button>
+                        </form>
+                        <a href="{{ url_for('edit_task', task_id=task.id) }}" class="btn btn-primary btn-sm mr-2">Edit</a>
+                        <a href="{{ url_for('delete_task', task_id=task.id) }}" class="btn btn-danger btn-sm mr-2">
+                          <i class="fas fa-trash-alt"></i> Delete
+                      </a>
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#prioritizeModal{{ task.id }}">Prioritize</button>
+                    {% else %}
+                        <span class="badge badge-success">Completed</span>
+                    {% endif %}
+                </div>
+            </div>
+          </div>
+
+            <!-- Prioritize Modal -->
+            <div class="modal fade" id="prioritizeModal{{ task.id }}" tabindex="-1" role="dialog" aria-labelledby="prioritizeModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="prioritizeModalLabel">Prioritize Task</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Adjust the priority level for this task:</p>
+                            <form method="POST" action="{{ url_for('prioritize_task', task_id=task.id) }}">
+                                <div class="form-group">
+                                    <label for="priorityLevel">Priority Level (1-10)</label>
+                                    <input type="number" class="form-control" id="priorityLevel" name="priority" min="1" max="10" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Priority</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+{% endblock %}

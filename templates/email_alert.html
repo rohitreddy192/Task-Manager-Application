@@ -1,0 +1,22 @@
+<!-- email_alert.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Email Alert Settings
+
+{% endblock %}
+
+{% block content %}
+
+<form method="POST" action="{{ url_for('update_email_alert') }}">
+    <div class="form-group">
+        <label for="emailAlertSwitch">Email Alert:</label>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="emailAlertSwitch" name="email_alert" {% if current_user.email_alert %}checked{% endif %}>
+            <label class="custom-control-label" for="emailAlertSwitch">Turn On/Off</label>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+{% endblock %}

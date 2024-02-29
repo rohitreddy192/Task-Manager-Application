@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="flash-message">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+    <script>
+      // Automatically close the flash message after 5 seconds
+      setTimeout(function() {
+        document.getElementById('flash-message').style.display = 'none';
+      }, 5000);
+    </script>
+  {% endif %}
+{% endwith %}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <h2>Login</h2>
+        <form method="POST" action="{{ url_for('login') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.username.label(class="form-control-label") }}
+                {{ form.username(class="form-control", placeholder="Enter your username") }}
+                {% for error in form.username.errors %}
+                    <small class="text-danger">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-control-label") }}
+                {{ form.password(class="form-control", placeholder="Enter your password") }}
+                {% for error in form.password.errors %}
+                    <small class="text-danger">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+                <a href="{{ url_for('forgot_password') }}" class="btn btn-link">Forgot Password?</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
