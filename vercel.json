@@ -11,5 +11,11 @@
       "src": "/(.*)",
       "dest": "/app.py"
     }
+  ],
+  "crons": [
+    {
+      "path": "/scheduled-task",  # Replace with the actual route defined in your app.py
+      "schedule": "0 * * * *"  # Runs every hour (minute 0 of every hour)
+    }
   ]
 }
