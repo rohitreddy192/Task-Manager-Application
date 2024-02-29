@@ -14,8 +14,8 @@
   ],
   "crons":[
     {
-      "path": "/scheduled-task",
-      "schedule": "/30 * * * *"
+      "path": "/(.*)/scheduled-task",
+      "schedule": "/10 * * * *"
     }
   ]
 }
