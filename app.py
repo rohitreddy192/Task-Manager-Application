@@ -356,7 +356,7 @@ def send_email(user_email, event):
 
     mail.send(msg)
 
-@app.route('/scheduled-task')
+@app.route('/api/cron')
 def send_overdue_emails():
     with app.app_context():
         current_time = datetime.now().time()
