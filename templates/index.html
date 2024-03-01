@@ -33,7 +33,7 @@ Home
         <div class="card">
           <div class="card-body">
                     <h5 class="card-title">{{ task.task_name }}</h5>
-                    <p class="card-text">Date: {{ task.date }} | Time: {{ task.time }} | Duration: {{ task.duration }} minutes</p>
+                    <p class="card-text">Date: {{ task.date.strftime('%d-%m-%Y') }} | Time: {{ task.time.strftime("%H:%M") }} | Duration: {{ task.duration }} minutes</p>
                     <p class="card-text">Notes: </p>
                       {% for note in task.notes.split("\r") %}
                         <p>{{ note }}</p>
