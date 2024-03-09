@@ -3,7 +3,7 @@
 
 ## What is this Application?
   
-  This Flask application is a task management system allowing users to schedule, edit, and prioritize events. Users can log in, add, and track tasks, receive email alerts, and customize their task management preferences. The application includes features for user authentication, dynamic scheduling, and personalized email notifications for improved productivity. 
+  This is a Flask based Task management system allowing users to schedule, edit, and prioritize events. Users can log in, add, and track tasks, receive email alerts, and customize their task management preferences. The application includes features for user authentication, dynamic scheduling, and personalized email notifications for improved productivity. 
   
 You may access the application [here](https://task-manager-application-37yuo72rz-vinay-rohit-reddy-s-projects.vercel.app/).
 
