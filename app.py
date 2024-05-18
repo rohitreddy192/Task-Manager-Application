@@ -110,21 +110,23 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        user = User.query.filter(User.name.ilike(form.username.data)).first()
-
-        print('inside user login ')
-        print(user)
-        print(f'user_id {user.id}')
-        if user:
-            if check_password_hash(user.password, form.password.data):
-                login_user(user)
-                flash('Login successful!', 'success')
-                return redirect(url_for('index'))
-            else:
-                flash('Wrong Password. Please try again..')
-        else:
-            flash('Invalid Credentials, please try again..')
+        try:
+            user = User.query.filter(User.name.ilike(form.username.data)).first()
     
+            print('inside user login ')
+            print(user)
+            print(f'user_id {user.id}')
+            if user:
+                if check_password_hash(user.password, form.password.data):
+                    login_user(user)
+                    flash('Login successful!', 'success')
+                    return redirect(url_for('index'))
+                else:
+                    flash('Wrong Password. Please try again..')
+            else:
+                flash('Invalid Credentials, please try again..')
+        except Exception:
+            flash('User not Found, Please check if you are entering username and password correctly..')
     return render_template('login.html', form = form)
 
 #Log Out Route 
