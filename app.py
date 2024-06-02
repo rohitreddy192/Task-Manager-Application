@@ -147,15 +147,19 @@ def signup():
             flash('Username already exists please pick a different one..!!')
             return redirect(url_for('signup'))
         else:
-            user = User(
-                name = form.username.data,
-                password = generate_password_hash(form.password.data),
-                email = form.email.data
-            )
-            db.session.add(user)
-            db.session.commit()
-            flash('Registration successful! You can now log in.', 'success')
-            return redirect(url_for('login'))
+            try:
+                user = User(
+                    name = form.username.data,
+                    password = generate_password_hash(form.password.data),
+                    email = form.email.data
+                )
+                db.session.add(user)
+                db.session.commit()
+                flash('Registration successful! You can now log in.', 'success')
+                return redirect(url_for('login'))
+            except Exception as e:
+                flash(f'An error occurred: {str(e)}', 'danger')
+                return redirect(url_for('signup'))
     return render_template('signup.html', form = form)
 
 # Function to generate a random 8-digit password
