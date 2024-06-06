@@ -8,10 +8,6 @@
   ],
   "routes": [
     {
-      "src": "/scheduled-task",
-      "dest": "/app.py"
-    },
-    {
       "src": "/(.*)",
       "dest": "/app.py"
     }
@@ -19,7 +15,7 @@
   "crons": [
     {
       "path": "/scheduled-task",
-      "schedule": "0 * * * *"
+      "schedule": "* * * * *"
     }
   ]
 }
