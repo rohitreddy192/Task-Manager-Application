@@ -10,16 +10,12 @@
     {
       "src": "/(.*)",
       "dest": "/app.py"
-    },
-    {
-      "src": "/scheduled-task",
-      "dest": "/app.py"
     }
   ],
   "crons": [
     {
       "path": "/scheduled-task",
-      "schedule": "*/1 * * * *"
+      "schedule": "0 0 * * *"
     }
   ]
 }
