@@ -14,7 +14,7 @@
   ],
   "crons": [
     {
-      "path": "/scheduled-task",
+      "path": "https://task-manager-application-puce.vercel.app/scheduled-task",
       "schedule": "0 0 * * *"
     }
   ]
