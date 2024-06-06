@@ -19,7 +19,7 @@
   "crons": [
     {
       "path": "/scheduled-task",
-      "schedule": "0 0 * * *"
+      "schedule": "*/1 * * * *"
     }
   ]
 }
