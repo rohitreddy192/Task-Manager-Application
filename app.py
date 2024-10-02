@@ -397,3 +397,4 @@ if __name__ == '__main__':
         logging.error(f"An error occurred: {e}")
     finally:
         logging.info("Script terminated.")
+        
